@@ -1,0 +1,90 @@
+<div class="modal-header">
+  <h4 class="modal-title">Create Customer</h4>
+  <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="container customer-container">
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        ID:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" [(ngModel)]="customer.id" placeholder="id (Required)" required pattern="[0-9]+" #idVar="ngModel">
+      </div>
+      <div class="col col-md-3">
+        <span class="help-block" *ngIf="(idVar.touched || idVar.dirty) && idVar.errors">
+          <span *ngIf="idVar.errors.required">
+            Please enter customer id.
+          </span>
+          <span *ngIf="idVar.errors.pattern">
+            Please enter a valid customer id.
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Name:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" [(ngModel)]="customer.customerName" placeholder="customer name (Required)" required pattern="[a-zA-Z]+" #custNameVar="ngModel">
+      </div>
+      <div class="col col-md-3">
+        <span class="help-block" *ngIf="(custNameVar.touched || custNameVar.dirty) && custNameVar.errors">
+          <span *ngIf="custNameVar.errors.required">
+            Please enter customer name.
+          </span>
+          <span *ngIf="custNameVar.errors.pattern">
+            Please enter a valid customer name.
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Password:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" [(ngModel)]="customer.password" placeholder="password (Required)" required #passwordVar="ngModel">
+      </div>
+      <div class="col col-md-3">
+        <span class="help-block" *ngIf="(passwordVar.touched || passwordVar.dirty) && passwordVar.errors">
+          <span *ngIf="passwordVar.errors.required">
+            Please enter password.
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-md-12">
+        <div *ngIf="response" class="alert alert-{{response.alertType}} alert-dismissible">
+          <button type="button" (click)="closeAlert()" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{response.responseMessage}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col col-md-4"></div>
+      <div class="col col-md-4" *ngIf="!(passwordVar.errors || custNameVar.errors || idVar.errors)">
+        <button class="btn btn-outline-success" (click)="customerCreate()">Create Customer</button>
+      </div>
+      <div class="col col-md-4" *ngIf="(passwordVar.errors || custNameVar.errors || idVar.errors)">
+          <button class="btn btn-outline-dark" disabled (click)="customerCreate()">Create Customer</button>
+        </div>
+      <div class="col col-md-4">
+        <button type="button" class="btn btn-outline-danger" (click)="modalRef.hide()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

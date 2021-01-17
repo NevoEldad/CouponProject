@@ -1,0 +1,110 @@
+<div class="modal-header">
+  <h4 class="modal-title">View Specific Company</h4>
+  <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="container company-container text-center">
+    <div class="row">
+      <div class="col col-md-1"></div>
+      <div class="col col-md-5">
+        Please Enter ID:
+      </div>
+      <div class="col col-md-5"></div>
+      <div class="col col-md-1"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-1"></div>
+      <div class="col col-md-5">
+        <input type="text" [(ngModel)]="id" (keyup)="idChanged(id)">
+      </div>
+      <div class="col col-md-5">
+        <button *ngIf="!idError" class="btn btn-outline-success" (click)="findCompanyById()">
+          Search
+        </button>
+        <button *ngIf="idError" disabled class="btn btn-outline-dark" (click)="findCompanyById()">
+            Search
+          </button>
+      </div>
+      <div class="col col-md-1"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-12">
+        <div *ngIf="searchResponse" class="alert alert-{{searchResponse.alertType}} alert-dismissible">
+          <button type="button" (click)="closeAlert(1)" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{searchResponse.responseMessage}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="company" class="container company-container text-center">
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        ID:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" readonly disabled value="{{company.id}}">
+      </div>
+      <div class="col col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Name:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" readonly disabled value="{{company.compName}}">
+      </div>
+      <div class="col col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Password:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" [(ngModel)]="company.password">
+      </div>
+      <div class="col col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Email:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" [(ngModel)]="company.email">
+      </div>
+      <div class="col col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-12">
+        <div *ngIf="response" class="alert alert-{{response.alertType}} alert-dismissible">
+          <button type="button" (click)="closeAlert(2)" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{response.responseMessage}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <div *ngIf="company" class="container text-center">
+    <div class="row">
+      <div class="col col-md-4">
+        <button class="btn btn-outline-danger" (click)="companyRemove()">Remove Company</button>
+      </div>
+      <div class="col col-md-4">
+        <button class="btn btn-outline-success" (click)="companyUpdate()">Update Company</button>
+      </div>
+      <div class="col col-md-4">
+        <button type="button" class="btn btn-outline-dark" (click)="modalRef.hide()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

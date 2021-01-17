@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+@keyframes slidein {
+    0%   {opacity:0;}
+    100% {opacity:1;}
+}
+
+.alert {
+    animation-name: slidein;
+    animation-duration: .9s;
+    display: block;
+}
+
+.modal-header {
+    background: DimGray ;
+}
+
+.modal-footer {
+    background: DimGray ;
+}
+
+.modal-body {
+    background: LightGrey;
+}
+
+.navbar {
+    background: DimGray;
+}

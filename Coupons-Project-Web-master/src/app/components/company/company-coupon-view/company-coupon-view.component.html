@@ -1,0 +1,304 @@
+<div class="modal-header">
+  <h4 class="modal-title">View Specific Coupons</h4>
+  <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="container text-center">
+    <div class="row">
+      <div class="col col-md-3">
+        <button class="btn btn-outline-dark" (click)="searchById = true; searchUpToDate = false; searchUpToPrice = false; searchByType = false; nullify()">
+          Search By Id
+        </button>
+      </div>
+      <div class="col col-md-3">
+        <button class="btn btn-outline-dark" (click)="searchById = false; searchUpToDate = true; searchUpToPrice = false; searchByType = false; nullify()">
+          Search Up To Date
+        </button>
+      </div>
+      <div class="col col-md-3">
+        <button class="btn btn-outline-dark" (click)="searchById = false; searchUpToDate = false; searchUpToPrice = true; searchByType = false; nullify()">
+          Search Up To Price
+        </button>
+      </div>
+      <div class="col col-md-3">
+        <button class="btn btn-outline-dark" (click)="searchById = false; searchUpToDate = false; searchUpToPrice = false; searchByType = true; nullify()">
+          Search By Type
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="searchUpToDate" class="container coupon-container text-center">
+    <div class="row">
+      <div class="col col-md-1"></div>
+      <div class="col col-md-5">
+        Please Enter Date:
+      </div>
+      <div class="col col-md-5"></div>
+      <div class="col col-md-1"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-1"></div>
+      <div class="col col-md-5">
+        <input type="date" [(ngModel)]="date">
+      </div>
+      <div class="col col-md-5">
+        <button class="btn btn-outline-success" (click)="findCouponsUpToDate()">
+          Search
+        </button>
+      </div>
+      <div class="col col-md-1"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-12">
+        <div *ngIf="searchResponse" class="alert alert-{{searchResponse.alertType}} alert-dismissible">
+          <button type="button" (click)="closeAlert(1)" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{searchResponse.responseMessage}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="searchUpToPrice" class="container coupon-container text-center">
+    <div class="row">
+      <div class="col col-md-1"></div>
+      <div class="col col-md-5">
+        Please Enter Price:
+      </div>
+      <div class="col col-md-5"></div>
+      <div class="col col-md-1"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-1"></div>
+      <div class="col col-md-5">
+        <input type="text" [(ngModel)]="price" (keyup)="priceChangedSearch(price)">
+      </div>
+      <div class="col col-md-5">
+        <button *ngIf="!priceSearchError" class="btn btn-outline-success" (click)="findCouponsUpToPrice()">
+          Search
+        </button>
+        <button *ngIf="priceSearchError" class="btn btn-outline-dark" disabled (click)="findCouponsUpToPrice()">
+            Search
+          </button>
+      </div>
+      <div class="col col-md-1"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-12">
+        <div *ngIf="searchResponse" class="alert alert-{{searchResponse.alertType}} alert-dismissible">
+          <button type="button" (click)="closeAlert(1)" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{searchResponse.responseMessage}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="searchByType" class="container coupon-container text-center">
+    <div class="row">
+      <div class="col col-md-1"></div>
+      <div class="col col-md-5">
+        Please Enter Type:
+      </div>
+      <div class="col col-md-5"></div>
+      <div class="col col-md-1"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-1"></div>
+      <div class="col col-md-5">
+        <select [(ngModel)]="type">
+          <option *ngFor="let typeo of couponTypes | keys" [value]="typeo.key">{{typeo.value}}</option>
+        </select>
+      </div>
+      <div class="col col-md-5">
+        <button class="btn btn-outline-success" (click)="findCouponsByType()">
+          Search
+        </button>
+      </div>
+      <div class="col col-md-1"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-12">
+        <div *ngIf="searchResponse" class="alert alert-{{searchResponse.alertType}} alert-dismissible">
+          <button type="button" (click)="closeAlert(1)" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{searchResponse.responseMessage}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="searchById" class="container coupon-container text-center">
+    <div class="row">
+      <div class="col col-md-1"></div>
+      <div class="col col-md-5">
+        Please Enter ID:
+      </div>
+      <div class="col col-md-5"></div>
+      <div class="col col-md-1"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-1"></div>
+      <div class="col col-md-5">
+        <input type="text" [(ngModel)]="id" (keyup)="idChanged(id)">
+      </div>
+      <div class="col col-md-5">
+        <button *ngIf="!idError" class="btn btn-outline-success" (click)="findCouponById()">
+          Search
+        </button>
+        <button *ngIf="idError" class="btn btn-outline-dark" disabled (click)="findCouponById()">
+            Search
+          </button>
+      </div>
+      <div class="col col-md-1"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-12">
+        <div *ngIf="searchResponse" class="alert alert-{{searchResponse.alertType}} alert-dismissible">
+          <button type="button" (click)="closeAlert(1)" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{searchResponse.responseMessage}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <div *ngIf="coupon" class="container coupon-container text-center">
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        ID:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" readonly disabled value="{{coupon.id}}">
+      </div>
+      <div class="col col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Title:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" readonly disabled value="{{coupon.title}}">
+      </div>
+      <div class="col col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Start Date:
+      </div>
+      <div class="col col-md-3">
+        <input type="date" readonly disabled value="{{coupon.startDate}}">
+      </div>
+      <div class="col col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        End Date:
+      </div>
+      <div class="col col-md-3">
+        <input type="date" [(ngModel)]="coupon.endDate">
+      </div>
+      <div class="col col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Amount:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" readonly disabled value="{{coupon.amount}}">
+      </div>
+      <div class="col col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Type:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" readonly disabled value="{{coupon.type}}">
+      </div>
+      <div class="col col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Description:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" readonly disabled value="{{coupon.message}}">
+      </div>
+      <div class="col col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Price:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" [(ngModel)]="coupon.price" required placeholder="price (Required)" pattern="[+-]?([0-9]*[.])?[0-9]+" #priceVar="ngModel" (keyup)="priceChanged(coupon.price);">
+      </div>
+      <div class="col col-md-3">
+        <span class="help-block" *ngIf="(priceVar.touched || priceVar.dirty) && priceVar.errors">
+          <span *ngIf="priceVar.errors.pattern">
+            Please enter a valid price.
+          </span>
+          <span *ngIf="priceVar.errors.required">
+            Please enter price.
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Image:
+      </div>
+      <div class="col col-md-3">
+        <img style="width: 50px;height: 50px;" [src]="coupon.image">
+      </div>
+      <div class="col col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-12">
+        <div *ngIf="response" class="alert alert-{{response.alertType}} alert-dismissible">
+          <button type="button" (click)="closeAlert(2)" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{response.responseMessage}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <div *ngIf="coupon" class="container text-center">
+    <div class="row">
+      <div class="col col-md-4">
+        <button class="btn btn-outline-danger" (click)="couponRemove()">Remove Coupon</button>
+      </div>
+      <div class="col col-md-4">
+        <button *ngIf="!error" class="btn btn-outline-success" (click)="couponUpdate()">Update Coupon</button>
+        <button *ngIf="error" class="btn btn-outline-dark" disabled (click)="couponUpdate()">Update Coupon</button>
+      </div>
+      <div class="col col-md-4">
+        <button type="button" class="btn btn-outline-dark" (click)="modalRef.hide()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

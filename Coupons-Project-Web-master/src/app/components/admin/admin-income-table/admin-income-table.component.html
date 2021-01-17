@@ -1,0 +1,38 @@
+<div *ngIf="incomes" class="container">
+  <div class="row">
+    <div class="col col-md-12">
+      <table *ngIf="incomes" class="table">
+        <thead>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Amount</th>
+          <th>User Type</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let income of incomes" [ngStyle]="{'background-color': income.color}">
+            <td>
+              <input type="text" value="{{income.id}}" readonly disabled>
+            </td>
+            <td>
+              <input type="text" value="{{income.name}}" readonly disabled>
+            </td>
+            <td>
+              <input type="text" value="{{income.date}}" readonly disabled>
+            </td>
+            <td>
+              <input type="text" value="{{income.description}}" readonly disabled>
+            </td>
+            <td>
+              <input type="text" value="{{income.amount}}" readonly disabled>
+            </td>
+            <td>
+              <input type="text" value="{{income.userType}}" readonly disabled>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+
+.row {
+    padding-bottom: 3%;
+}
+
+.container {
+    animation-name: slidein;
+    animation-duration: .9s;
+}
+
+.wrapper {
+    overflow: scroll;
+}

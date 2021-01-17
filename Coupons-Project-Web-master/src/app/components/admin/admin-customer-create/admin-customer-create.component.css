@@ -1,0 +1,12 @@
+
+.customer-container .row{
+    margin-top: 4%;
+    margin-bottom: 4%;
+}
+
+.alert {
+    animation-name: slidein;
+    animation-duration: .9s;
+    display: block;
+}
+

@@ -1,0 +1,184 @@
+<div class="modal-header">
+  <h4 class="modal-title">Create Coupon</h4>
+  <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="container coupon-container">
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        ID:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" [(ngModel)]="coupon.id" placeholder="id (Required)" required pattern="[0-9]+" #idVar="ngModel">
+      </div>
+      <div class="col col-md-3">
+        <span class="help-block" *ngIf="(idVar.touched || idVar.dirty) && idVar.errors">
+          <span *ngIf="idVar.errors.required">
+            Please enter coupon id.
+          </span>
+          <span *ngIf="idVar.errors.pattern">
+            Please enter a valid coupon id.
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Title:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" [(ngModel)]="coupon.title" placeholder="coupon name (Required)" required pattern="[a-zA-Z]+" #coupTitleVar="ngModel">
+      </div>
+      <div class="col col-md-3">
+        <span class="help-block" *ngIf="(coupTitleVar.touched || coupTitleVar.dirty) && coupTitleVar.errors">
+          <span *ngIf="coupTitleVar.errors.required">
+            Please enter coupon title.
+          </span>
+          <span *ngIf="coupTitleVar.errors.pattern">
+            Please enter a valid coupon title.
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Start Date:
+      </div>
+      <div class="col col-md-3">
+        <input type="date" [(ngModel)]="coupon.startDate" required #startDateVar="ngModel">
+      </div>
+      <div class="col col-md-3">
+        <span class="help-block" *ngIf="(startDateVar.touched || startDateVar.dirty) && startDateVar.errors">
+          <span *ngIf="startDateVar.errors.required">
+            Please choose start date.
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        End Date:
+      </div>
+      <div class="col col-md-3">
+        <input type="date" [(ngModel)]="coupon.endDate" required #endDateVar="ngModel">
+      </div>
+      <div class="col col-md-3">
+        <span class="help-block" *ngIf="(endDateVar.touched || endDateVar.dirty) && endDateVar.errors">
+          <span *ngIf="endDateVar.errors.required">
+            Please choose end date.
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Amount:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" [(ngModel)]="coupon.amount" required placeholder="amount (Required)" pattern="[0-9]+" #amountVar="ngModel">
+      </div>
+      <div class="col col-md-3">
+        <span class="help-block" *ngIf="(amountVar.touched || amountVar.dirty) && amountVar.errors">
+          <span *ngIf="amountVar.errors.pattern">
+            Please enter a valid amount.
+          </span>
+          <span *ngIf="amountVar.errors.required">
+            Please enter amount.
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Type:
+      </div>
+      <div class="col col-md-3">
+        <select name="couponType" [(ngModel)]="coupon.type" id="couponType">
+          <option *ngFor="let type of couponTypes | keys" [value]="type.key">{{type.value}}</option>
+        </select>
+      </div>
+      <div class="col col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Description:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" [(ngModel)]="coupon.message" placeholder="message">
+      </div>
+      <div class="col col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Price:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" [(ngModel)]="coupon.price" required placeholder="price (Required)" pattern="[+-]?([0-9]*[.])?[0-9]+" #priceVar="ngModel">
+      </div>
+      <div class="col col-md-3">
+        <span class="help-block" *ngIf="(priceVar.touched || priceVar.dirty) && priceVar.errors">
+          <span *ngIf="priceVar.errors.pattern">
+            Please enter a valid price.
+          </span>
+          <span *ngIf="priceVar.errors.required">
+            Please enter price.
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3 text-center">
+        <img *ngIf="coupon.image" [src]="coupon.image" style="width:60px; height: 60px;">
+      </div>
+      <div class="col col-md-3">
+        Image:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" [(ngModel)]="coupon.image" required placeholder="image (Required)" #imageVar="ngModel">
+      </div>
+      <div class="col col-md-3">
+        <span class="help-block" *ngIf="(imageVar.touched || imageVar.dirty) && imageVar.errors">
+          <span *ngIf="imageVar.errors.required">
+            Please enter image source.
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-md-12">
+        <div *ngIf="response" class="alert alert-{{response.alertType}} alert-dismissible">
+          <button type="button" (click)="closeAlert()" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{response.responseMessage}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col col-md-4"></div>
+      <div class="col col-md-4" *ngIf="!(idVar.errors || coupTitleVar.errors || startDateVar.errors || endDateVar.errors || amountVar.errors || priceVar.errors || imageVar.errors)">
+        <button class="btn btn-outline-success" (click)="couponCreate()">Create Coupon</button>
+      </div>
+      <div class="col col-md-4" *ngIf="(idVar.errors || coupTitleVar.errors || startDateVar.errors || endDateVar.errors || amountVar.errors || priceVar.errors || imageVar.errors)">
+        <button disabled class="btn btn-outline-dark" (click)="couponCreate()">Create Coupon</button>
+      </div>
+      <div class="col col-md-4">
+        <button type="button" class="btn btn-outline-danger" (click)="modalRef.hide()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

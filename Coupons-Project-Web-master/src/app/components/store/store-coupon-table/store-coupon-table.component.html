@@ -1,0 +1,68 @@
+<div *ngIf="coupons" class="container-table">
+  <div class="row ">
+    <div class="col col-md-12">
+      <table *ngIf="coupons" class="table">
+        <thead>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Amount</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Image</th>
+          <th>Buy</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let coupon of coupons" [ngStyle]="{'background-color': coupon.color}">
+            <td>
+              <input type="text" value="{{coupon.id}}" readonly disabled>
+            </td>
+            <td>
+              <input type="text" value="{{coupon.title}}" readonly disabled>
+            </td>
+            <td>
+              <input type="text" value="{{coupon.startDate | date: 'dd/MM/yyyy'}} " readonly disabled>
+            </td>
+            <td>
+              <input type="text" value="{{coupon.endDate | date: 'dd/MM/yyyy'}} " readonly disabled>
+            </td>
+            <td>
+              <input type="text" value="{{coupon.amount}}" readonly disabled>
+            </td>
+            <td>
+              <input type="text" value="{{coupon.type}}" readonly disabled>
+            </td>
+            <td>
+              <p>{{coupon.message}}</p>
+            </td>
+            <td>
+              <input type="text" value="{{coupon.price}}" readonly disabled>
+            </td>
+            <td>
+              <img style="width: 50px;height: 50px;" [src]="coupon.image" alt="{{coupon.title}}">
+            </td>
+            <td>
+              <button class="btn btn-outline-dark" (click)="purchaseCoupon(coupon)">
+                Buy
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col col-md-12">
+          <div *ngIf="response" class="alert alert-{{response.alertType}} alert-dismissible">
+            <button type="button" (click)="closeAlert()" class="close" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            {{response.responseMessage}}
+          </div>
+        </div>
+      </div>
+</div>

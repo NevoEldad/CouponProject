@@ -1,0 +1,77 @@
+<div class="wrapper">
+  <div *ngIf="coupons" class="container">
+    <div class="row ">
+      <div class="col col-md-12">
+        <table *ngIf="coupons" class="table">
+          <thead>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Amount</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Remove</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let coupon of coupons" [ngStyle]="{'background-color': coupon.color}">
+              <td>
+                <input type="text" value="{{coupon.id}}" readonly disabled>
+              </td>
+              <td>
+                <input type="text" value="{{coupon.title}}" readonly disabled>
+              </td>
+              <td>
+                <input type="text" value="{{coupon.startDate | date: 'dd/MM/yyyy'}} " readonly disabled>
+              </td>
+              <td>
+                <input type="date" [(ngModel)]="coupon.endDate" (keyup)="coupon.toUpdate = true;coupon.color = 'SlateGrey'">
+              </td>
+              <td>
+                <input type="text" value="{{coupon.amount}}" readonly disabled>
+              </td>
+              <td>
+                <input type="text" value="{{coupon.type}}" readonly disabled>
+              </td>
+              <td>
+                <p>{{coupon.message}}</p>
+              </td>
+              <td>
+                <input type="text" [(ngModel)]="coupon.price" (keyup)="coupon.toUpdate = true; coupon.color = priceChanged(coupon.price);">
+              </td>
+              <td>
+                <img style="width: 50px;height: 50px;" [src]="coupon.image" alt="{{coupon.title}}">
+              </td>
+              <td>
+                <input type="checkbox" [(ngModel)]="coupon.toRemove">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col col-md-4 ">
+        <button class="btn btn-outline-primary " (click)="updateSelectedCoupons() ">
+          Update Coupons
+        </button>
+      </div>
+      <div class="col col-md-4 ">
+        <button class="btn btn-outline-danger " (click)="removeSelectedCoupons() ">
+          Remove Selected Coupons
+        </button>
+      </div>
+      <div class="col col-md-4 ">
+        <button class="btn btn-outline-success " (click)="openModal(createCoupon) ">
+          Create Coupon
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #createCoupon>
+  <app-company-coupon-create [modalRef]="modalRef " (couponCreateEvent)="addCouponToArray($event) "></app-company-coupon-create>
+</ng-template>

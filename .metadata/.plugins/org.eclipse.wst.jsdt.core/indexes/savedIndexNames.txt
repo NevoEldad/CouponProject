@@ -1,0 +1,1 @@
+INDEX VERSION 1.4+C:\Users\djbel\Downloads\Coupons Project\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes

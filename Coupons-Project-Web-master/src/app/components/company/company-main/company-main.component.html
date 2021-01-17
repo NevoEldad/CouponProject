@@ -1,0 +1,25 @@
+<div class="overlay">
+    <div class="container workgroup">
+        <div class="row">
+            <div class="col col-md-6">
+                <button class="btn btn-outline-dark" (click)="coupons = false; openModal(viewSpecificCoupon)">
+                    View Specific Coupon
+                </button>
+            </div>
+            <div class="col col-md-6">
+                <button class="btn btn-outline-dark" (click)="openCoupons()">
+                    Coupons View
+                </button>
+            </div>
+        </div>
+        <div class="row text-left">
+            <div class="col col-md-12">
+
+            </div>
+        </div>
+    </div>
+    <app-company-coupon-table *ngIf="coupons" [coupons]="couponsToSend"> </app-company-coupon-table>
+</div>
+<ng-template #viewSpecificCoupon>
+    <app-company-coupon-view [modalRef]="modalRef" (sendCoupons)="loadCoupons($event)"></app-company-coupon-view>
+</ng-template>

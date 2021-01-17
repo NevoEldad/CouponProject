@@ -1,0 +1,13 @@
+.overlay {
+    min-height: 84vh;
+    background-color: lightgrey;
+}
+
+.workgroup .row {
+    padding-top: 3%;
+    background-color: lightgrey;
+}
+
+.workgroup { 
+    background-color: lightgrey;
+}

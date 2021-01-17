@@ -1,0 +1,150 @@
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <a class="navbar-brand" routerLink="/home" href="#">Couponz</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+    aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <li *ngIf="loggedInType == guest || loggedInType == null" class="nav-item">
+        <a class="nav-link" style="cursor: pointer;" (click)="openModal(loginTemplate)">Login
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li *ngIf="loggedInType != guest && loggedInType != null" class="nav-item">
+        <a class="nav-link" href="#" (click)="logout()">Logout
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li *ngIf="loggedInType == admin" class="nav-item">
+        <a class="nav-link" style="cursor: pointer;" routerLink="/admin">Admin
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li *ngIf="loggedInType == company" class="nav-item">
+        <a class="nav-link" style="cursor: pointer;" routerLink="/company">Coupon Management
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li *ngIf="loggedInType == customer" class="nav-item">
+        <a class="nav-link" style="cursor: pointer;" routerLink="/customer">My Coupons
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li *ngIf="loggedInType == customer" class="nav-item">
+          <a class="nav-link" style="cursor: pointer;" routerLink="/store">Store
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+      <li *ngIf="loggedInType == company" class="nav-item">
+        <a class="nav-link" style="cursor: pointer;" (click)="openModal(companyProfile)"> Profile
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li *ngIf="loggedInType == customer" class="nav-item">
+        <a class="nav-link" style="cursor: pointer;" (click)="openModal(customerProfile)"> Profile
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>   
+      <li *ngIf="loggedInType == guest" class="nav-item">
+        <a class="nav-link disabled" style="color: aliceblue"> Welcome Guest
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li *ngIf="loggedInType == admin" class="nav-item">
+        <a class="nav-link disabled" style="color: aliceblue"> Welcome Admin
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li *ngIf="loggedInType == company" class="nav-item">
+        <a class="nav-link disabled" style="color: aliceblue"> Welcome {{currentUserName}}
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li *ngIf="loggedInType == customer" class="nav-item">
+        <a class="nav-link disabled" style="color: aliceblue"> Welcome {{currentUserName}}
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<ng-template #loginTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Login</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container login-container">
+      <div class="row">
+        <div class="col col-md-3"></div>
+        <div class="col col-md-3">
+          <label>UserName:</label>
+        </div>
+        <div class="col col-md-3">
+          <input type="text" name="username" id="username" [(ngModel)]="user.userName">
+        </div>
+        <div class="col col-md-3"></div>
+      </div>
+      <div class="row">
+        <div class="col col-md-3"></div>
+        <div class="col col-md-3">
+          <label>Password:</label>
+        </div>
+        <div class="col col-md-3">
+          <input type="text" name="password" id="password" [(ngModel)]="user.password">
+        </div>
+        <div class="col col-md-3"></div>
+      </div>
+      <div class="row">
+        <div class="col col-md-3"></div>
+        <div class="col col-md-3">
+          <label>UserType:</label>
+        </div>
+        <div class="col col-md-3">
+          <select (change)="changeUserType(user.userType)" [(ngModel)]="user.userType">
+            <option value="{{admin}}">{{admin}}</option>
+            <option value="{{company}}">{{company}}</option>
+            <option value="{{customer}}">{{customer}}</option>
+          </select>
+        </div>
+        <div class="col col-md-3"></div>
+      </div>
+      <div class="row">
+        <div class="col col-md-12">
+          <div *ngIf="response" class="alert alert-{{response.alertType}} alert-dismissible">
+            <button type="button" (click)="response = null;" class="close" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            {{response.responseMessage}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col col-md-6"></div>
+        <div class="col col-md-3">
+          <button class="btn btn-outline-success" (click)="login()"> Login </button>
+        </div>
+        <div class="col col-md-3">
+          <button class="btn btn-outline-danger" (click)="modalRef.hide()"> Cancel </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #companyProfile>
+  <app-company-profile-view [modalRef]="modalRef"></app-company-profile-view>
+</ng-template>
+
+<ng-template #customerProfile>
+  <app-customer-profile-view [modalRef]="modalRef"></app-customer-profile-view>
+</ng-template>

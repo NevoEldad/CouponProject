@@ -1,0 +1,107 @@
+<div class="modal-header">
+  <h4 class="modal-title">Create Company</h4>
+  <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="container company-container">
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        ID:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" [(ngModel)]="company.id" placeholder="id (Required)" required pattern="[0-9]+" #idVar="ngModel">
+      </div>
+      <div class="col col-md-3">
+        <span class="help-block" *ngIf="(idVar.touched || idVar.dirty) && idVar.errors">
+          <span *ngIf="idVar.errors.required">
+            Please enter company id.
+          </span>
+          <span *ngIf="idVar.errors.pattern">
+            Please enter a valid company id.
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Name:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" [(ngModel)]="company.compName" placeholder="company name (Required)" required pattern="[a-zA-Z]+" #compNameVar="ngModel">
+      </div>
+      <div class="col col-md-3">
+        <span class="help-block" *ngIf="(compNameVar.touched || compNameVar.dirty) && compNameVar.errors">
+          <span *ngIf="compNameVar.errors.required">
+            Please enter company name.
+          </span>
+          <span *ngIf="compNameVar.errors.pattern">
+            Please enter a valid company name.
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Password:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" [(ngModel)]="company.password" placeholder="password (Required)" required #passwordVar="ngModel">
+      </div>
+      <div class="col col-md-3">
+        <span class="help-block" *ngIf="(passwordVar.touched || passwordVar.dirty) && passwordVar.errors">
+          <span *ngIf="passwordVar.errors.required">
+            Please enter password.
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-md-3"></div>
+      <div class="col col-md-3">
+        Email:
+      </div>
+      <div class="col col-md-3">
+        <input type="text" [(ngModel)]="company.email" placeholder="test@example.com" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+"
+          #emailVar="ngModel">
+      </div>
+      <div class="col col-md-3">
+        <span class="help-block" *ngIf="(emailVar.touched || emailVar.dirty) && emailVar.errors">
+          <span *ngIf="emailVar.errors.pattern">
+            Please enter a valid email address.
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-md-12">
+        <div *ngIf="response" class="alert alert-{{response.alertType}} alert-dismissible">
+          <button type="button" (click)="closeAlert()" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{response.responseMessage}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col col-md-4"></div>
+      <div class="col col-md-4" *ngIf="!(passwordVar.errors || emailVar.errors || compNameVar.errors || idVar.errors)">
+        <button class="btn btn-outline-success" (click)="companyCreate()">Create Company</button>
+      </div>
+      <div class="col col-md-4" *ngIf="(passwordVar.errors || emailVar.errors || compNameVar.errors || idVar.errors)">
+          <button disabled class="btn btn-outline-dark" (click)="companyCreate()">Create Company</button>
+        </div>
+      <div class="col col-md-4">
+        <button type="button" class="btn btn-outline-danger" (click)="modalRef.hide()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

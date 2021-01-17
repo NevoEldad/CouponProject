@@ -1,0 +1,44 @@
+<div class="overlay">
+  <div class="container text-center workgroup">
+    <div class="row">
+      <div class="col col-md-3">
+        <button class="btn btn-outline-dark" (click)="companies = false; customers = false; income = false; openModal(viewSpecificCompany)">
+          View Specific Company
+        </button>
+      </div>
+      <div class="col col-md-2">
+        <button class="btn btn-outline-dark" (click)="companies = true; customers = false; income = false;">
+          Companies View
+        </button>
+      </div>
+      <div class="col col-md-2">
+        <button class="btn btn-outline-dark" (click)="companies = false; customers = true; income = false;">
+          Customers View
+        </button>
+      </div>
+      <div class="col col-md-3">
+        <button class="btn btn-outline-dark" (click)="companies = false; customers = false; income = false; openModal(viewSpecificCustomer)">
+          View Specific Customer
+        </button>
+      </div>
+      <div class="col col-md-2">
+        <button class="btn btn-outline-dark" (click)="companies = false; customers = false; income = true;">
+          View Income
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-md-12">
+        <app-admin-company-table *ngIf="companies"> </app-admin-company-table>
+        <app-admin-customer-table *ngIf="customers"> </app-admin-customer-table>
+        <app-admin-income-table *ngIf="income"> </app-admin-income-table>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #viewSpecificCompany>
+  <app-admin-company-view [modalRef]="modalRef"></app-admin-company-view>
+</ng-template>
+<ng-template #viewSpecificCustomer>
+  <app-admin-customer-view [modalRef]="modalRef"></app-admin-customer-view>
+</ng-template>

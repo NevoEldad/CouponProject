@@ -1,0 +1,17 @@
+
+
+.alert {
+    animation-name: slidein;
+    animation-duration: .9s;
+    display: block;
+}
+
+.wrapper {
+    min-height: 84vh;
+    background-color: LightGrey;
+}
+
+.container .row {
+    padding-top: 3%;
+    background-color: LightGrey;
+}

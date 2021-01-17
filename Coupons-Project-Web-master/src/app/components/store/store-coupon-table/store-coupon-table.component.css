@@ -1,0 +1,10 @@
+
+.row {
+    padding-bottom: 3%;
+}
+
+.container-table {
+    animation-name: slidein;
+    animation-duration: .9s;
+    margin-left: 0%;
+}
